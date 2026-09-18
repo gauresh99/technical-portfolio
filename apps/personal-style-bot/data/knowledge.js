@@ -3,15 +3,6 @@
  * ----------------------------------------------------------------------------
  * This is the "reference library" every expert engine reads from. It encodes
  * well-established, non-controversial style principles:
- *   - the 12-spoke color wheel (hue buckets) + harmony relationships
- *   - neutral colors that pair with anything
- *   - garment taxonomy (category -> subtypes) and where each sits on the body
- *   - fit levels and proportion-balance rules
- *   - formality scale (0 loungewear .. 5 formal)
- *   - a light brand-tier map used by the behaviour engine
- *
- * Nothing here talks to the DOM. It is pure data + tiny pure helpers so it can
- * be unit-reasoned about and reused by fashion.js / mood.js / vastu.js / rl.js.
  * ========================================================================== */
 (function (global) {
   'use strict';
