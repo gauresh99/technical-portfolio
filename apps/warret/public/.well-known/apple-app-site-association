@@ -1,0 +1,11 @@
+{
+  "applinks": {
+    "apps": [],
+    "details": [
+      {
+        "appID": "REPLACE_WITH_TEAM_ID.com.warret.app",
+        "paths": ["/import", "/verify", "/document", "/join"]
+      }
+    ]
+  }
+}

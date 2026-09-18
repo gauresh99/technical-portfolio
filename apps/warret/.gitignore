@@ -1,0 +1,34 @@
+# Dependencies
+node_modules/
+
+# Expo / React Native
+.expo/
+dist/
+web-build/
+*.expo/
+
+# Environment / secrets
+.env
+.env.*
+!.env.example
+SECRETS.md
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+*.log
+
+# OS / editor files
+.DS_Store
+*.swp
+*.swo
+.vscode/
+.idea/
+
+# Local tool state
+.claude/settings.local.json
+
+# Generated local files
+warret_template-*.csv

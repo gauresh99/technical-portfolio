@@ -1,0 +1,36 @@
+# OS/editor
+.DS_Store
+*.swp
+*.swo
+.claude/
+.vscode/
+.idea/
+
+# Environment and secrets
+.env
+.env.*
+!.env.example
+SECRETS.md
+*.pem
+*.key
+
+# JavaScript
+node_modules/
+.expo/
+dist/
+build/
+coverage/
+
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+venv/
+
+# Native build outputs
+firmware/bldc-drv1098x/build/
+ml/ai-mock-interview/build/
+
+# Logs
+*.log

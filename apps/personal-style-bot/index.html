@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>StyleMind — your personal stylist</title>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <span class="logo">◈</span>
+      <div>
+        <h1>StyleMind</h1>
+        <p class="tagline">your closet, five experts, one outfit a day</p>
+      </div>
+    </div>
+    <nav class="tabs" id="tabs">
+      <button class="tab active" data-view="today">Today</button>
+      <button class="tab" data-view="planner">Planner</button>
+      <button class="tab" data-view="packing">Packing</button>
+      <button class="tab" data-view="closet">Closet</button>
+      <button class="tab" data-view="add">Add clothes</button>
+      <button class="tab" data-view="history">History</button>
+      <button class="tab" data-view="insights">Insights</button>
+      <button class="tab" data-view="brain">Taste brain</button>
+      <button class="tab" data-view="settings">Settings</button>
+    </nav>
+  </header>
+
+  <main id="app">
+    <!-- ============ TODAY ============ -->
+    <section class="view active" data-view="today">
+      <div class="panel today-controls">
+        <h2>What's today about?</h2>
+        <div class="field-row">
+          <label>My mood
+            <select id="moodSel"></select>
+          </label>
+          <label>I want to look
+            <select id="intentSel"></select>
+          </label>
+          <label>Weather
+            <select id="weatherSel"></select>
+          </label>
+          <label>Date
+            <input type="date" id="dateSel" />
+          </label>
+        </div>
+        <div id="vastuBanner" class="vastu-banner"></div>
+        <button id="recommendBtn" class="primary big">Recommend my outfit →</button>
+        <p id="targetSummary" class="muted"></p>
+      </div>
+      <div id="recoResults" class="reco-results"></div>
+    </section>
+
+    <!-- ============ PLANNER ============ -->
+    <section class="view" data-view="planner">
+      <div class="panel planner-panel">
+        <h2>Week planner</h2>
+        <div class="field-row">
+          <label>Start date
+            <input type="date" id="planStart" />
+          </label>
+          <label>Default mood
+            <select id="planMood"></select>
+          </label>
+          <label>Default look
+            <select id="planIntent"></select>
+          </label>
+          <label>Weather
+            <select id="planWeather"></select>
+          </label>
+        </div>
+        <button id="planWeekBtn" class="primary big">Plan 7 local outfits</button>
+      </div>
+      <div id="weekPlan" class="plan-grid"></div>
+    </section>
+
+    <!-- ============ PACKING ============ -->
+    <section class="view" data-view="packing">
+      <div class="panel packing-panel">
+        <h2>Packing capsule</h2>
+        <div class="field-row">
+          <label>Trip starts
+            <input type="date" id="packStart" />
+          </label>
+          <label>Days
+            <input type="number" id="packDays" min="1" max="21" value="4" />
+          </label>
+          <label>Trip mood
+            <select id="packMood"></select>
+          </label>
+          <label>Trip look
+            <select id="packIntent"></select>
+          </label>
+          <label>Weather
+            <select id="packWeather"></select>
+          </label>
+        </div>
+        <button id="packBtn" class="primary big">Build packing list</button>
+      </div>
+      <div id="packingList" class="packing-results"></div>
+    </section>
+
+    <!-- ============ CLOSET ============ -->
+    <section class="view" data-view="closet">
+      <div class="panel">
+        <div class="closet-head">
+          <h2>My closet <span id="closetCount" class="pill">0</span></h2>
+          <label class="closet-search">Search closet
+            <input type="search" id="closetSearch" placeholder="black tee, denim, baggy, sneakers..." />
+          </label>
+          <div class="filters" id="closetFilters"></div>
+        </div>
+        <div id="closetGrid" class="closet-grid"></div>
+        <p id="closetEmpty" class="muted empty">Nothing here yet. Go to <b>Add clothes</b> to upload photos of your garments.</p>
+      </div>
+    </section>
+
+    <!-- ============ ADD ============ -->
+    <section class="view" data-view="add">
+      <div class="panel add-panel">
+        <h2>Add a garment</h2>
+        <p class="muted">Upload a photo. The computer-vision engine reads its colour, brightness and pattern automatically — you just confirm the type &amp; fit.</p>
+        <div id="modelHint" class="model-hint"></div>
+
+        <div class="add-grid">
+          <div class="dropzone" id="dropzone">
+            <input type="file" id="fileInput" accept="image/*" multiple hidden />
+            <div class="dz-inner">
+              <div class="dz-icon">⬆</div>
+              <p><b>Click or drop photos</b><br/>one or many at once</p>
+            </div>
+          </div>
+
+          <form class="add-form" id="addForm">
+            <div class="preview-wrap">
+              <img id="addPreview" class="add-preview" alt="preview" />
+              <div id="cvReadout" class="cv-readout"></div>
+            </div>
+
+            <label>Category
+              <select id="catSel"></select>
+            </label>
+            <label>Type
+              <select id="subtypeSel"></select>
+            </label>
+            <label>Fit
+              <select id="fitSel">
+                <option value="">— (n/a) —</option>
+                <option value="slim">Slim</option>
+                <option value="fitted">Fitted</option>
+                <option value="regular" selected>Regular</option>
+                <option value="relaxed">Relaxed</option>
+                <option value="oversized">Oversized</option>
+                <option value="baggy">Baggy</option>
+              </select>
+            </label>
+            <label>Detected colour
+              <div class="color-confirm">
+                <input type="text" id="colorFamily" />
+                <span class="dot" id="colorDot"></span>
+              </div>
+            </label>
+            <label>Name / brand (optional)
+              <input type="text" id="nameInput" placeholder="e.g. navy Uniqlo tee" />
+            </label>
+            <label>Price paid (optional)
+              <input type="number" id="priceInput" min="0" step="0.01" placeholder="for cost-per-wear" />
+            </label>
+            <div class="add-actions">
+              <button type="submit" class="primary">Save to closet</button>
+              <span id="addStatus" class="muted"></span>
+            </div>
+          </form>
+        </div>
+        <div id="batchQueue" class="batch-queue"></div>
+      </div>
+    </section>
+
+    <!-- ============ HISTORY ============ -->
+    <section class="view" data-view="history">
+      <div class="panel">
+        <h2>Wear history &amp; ratings</h2>
+        <p class="muted">Every outfit you log feeds the 3-day no-repeat rule and teaches your taste brain.</p>
+        <div id="historyList" class="history-list"></div>
+      </div>
+    </section>
+
+    <!-- ============ INSIGHTS ============ -->
+    <section class="view" data-view="insights">
+      <div class="panel">
+        <h2>Wardrobe insights</h2>
+        <div id="insightStats" class="insight-stats"></div>
+        <div id="paletteBreakdown" class="palette-grid"></div>
+      </div>
+      <div id="insightLists" class="insight-lists"></div>
+    </section>
+
+    <!-- ============ BRAIN ============ -->
+    <section class="view" data-view="brain">
+      <div class="panel">
+        <h2>Taste brain</h2>
+        <p class="muted">A contextual bandit that learns what YOU like per occasion from your ratings. Bars show the learned weight of each style signal.</p>
+        <div class="field-row">
+          <label>Context
+            <select id="brainCtx"></select>
+          </label>
+        </div>
+        <div id="brainWeights" class="brain-weights"></div>
+        <p id="brainMeta" class="muted"></p>
+      </div>
+    </section>
+
+    <!-- ============ SETTINGS ============ -->
+    <section class="view" data-view="settings">
+      <div class="panel">
+        <h2>Settings</h2>
+        <div class="setting">
+          <label>Full-length photo of you (for the try-on board)
+            <input type="file" id="userPhotoInput" accept="image/*" />
+          </label>
+          <img id="userPhotoPrev" class="user-photo-prev" alt="" />
+        </div>
+        <div class="setting">
+          <label>Vastu / astrology influence
+            <input type="range" id="vastuWeight" min="0" max="0.5" step="0.05" value="0.15" />
+            <span id="vastuWeightVal">0.15</span>
+          </label>
+          <p class="muted">How strongly today's auspicious colour nudges recommendations. Set to 0 to ignore.</p>
+        </div>
+        <div class="setting">
+          <h3>Local models</h3>
+          <p id="localModelStatus" class="muted"></p>
+          <button id="retrainModelBtn" class="ghost">Retrain from closet</button>
+          <button id="seedDemoBtn" class="ghost">Load test user + closet</button>
+        </div>
+        <div class="setting danger">
+          <h3>Data</h3>
+          <button id="exportBtn" class="ghost">Export wardrobe (JSON)</button>
+          <button id="resetBrainBtn" class="ghost">Reset taste brain</button>
+          <button id="wipeBtn" class="ghost danger-btn">Erase everything</button>
+        </div>
+        <p class="muted small">Everything is stored locally in your browser (IndexedDB). Nothing leaves this device.</p>
+      </div>
+    </section>
+  </main>
+
+  <!-- rating modal -->
+  <div id="ratingModal" class="modal hidden">
+    <div class="modal-card">
+      <h3>How was this fit?</h3>
+      <div id="ratingOutfit" class="rating-outfit"></div>
+      <div class="stars" id="stars">
+        <span data-v="1">★</span><span data-v="2">★</span><span data-v="3">★</span>
+        <span data-v="4">★</span><span data-v="5">★</span>
+      </div>
+      <label class="wear-check"><input type="checkbox" id="markWorn" checked /> I wore this today (log it for the 3-day rule)</label>
+      <div class="modal-actions">
+        <button id="saveRating" class="primary">Save</button>
+        <button id="cancelRating" class="ghost">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast" class="toast hidden"></div>
+
+  <!-- engines load in dependency order (no build step, no modules) -->
+  <script src="data/knowledge.js"></script>
+  <script src="js/db.js"></script>
+  <script src="js/cv.js"></script>
+  <script src="js/localml.js"></script>
+  <script src="js/fashion.js"></script>
+  <script src="js/mood.js"></script>
+  <script src="js/vastu.js"></script>
+  <script src="js/rl.js"></script>
+  <script src="js/tryon.js"></script>
+  <script src="js/recommender.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

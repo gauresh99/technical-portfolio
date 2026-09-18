@@ -1,0 +1,88 @@
+{
+  "expo": {
+    "name": "Warret",
+    "slug": "warret",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "scheme": "warret",
+    "ios": {
+      "bundleIdentifier": "com.warret.app",
+      "buildNumber": "1",
+      "associatedDomains": [
+        "applinks:warret.app"
+      ],
+      "infoPlist": {
+        "NSPhotoLibraryUsageDescription": "Warret needs photo access so you can attach warranty cards, invoices and receipts to your products.",
+        "NSCameraUsageDescription": "Warret uses the camera to snap photos of warranty cards and invoices.",
+        "NSPhotoLibraryAddUsageDescription": "Warret saves exported documents and backups to your photo library only when you ask it to."
+      }
+    },
+    "android": {
+      "package": "com.warret.app",
+      "versionCode": 1,
+      "permissions": [
+        "android.permission.CAMERA",
+        "android.permission.READ_MEDIA_IMAGES"
+      ],
+      "intentFilters": [
+        {
+          "action": "VIEW",
+          "autoVerify": true,
+          "data": [
+            {
+              "scheme": "https",
+              "host": "warret.app",
+              "pathPrefix": "/import"
+            },
+            {
+              "scheme": "https",
+              "host": "warret.app",
+              "pathPrefix": "/document"
+            },
+            {
+              "scheme": "https",
+              "host": "warret.app",
+              "pathPrefix": "/verify"
+            },
+            {
+              "scheme": "https",
+              "host": "warret.app",
+              "pathPrefix": "/join"
+            },
+            {
+              "scheme": "warret"
+            }
+          ],
+          "category": [
+            "BROWSABLE",
+            "DEFAULT"
+          ]
+        }
+      ]
+    },
+    "web": {
+      "output": "single"
+    },
+    "plugins": [
+      "expo-router",
+      "expo-font",
+      "expo-sharing",
+      [
+        "expo-notifications",
+        {
+          "color": "#5B4DF0"
+        }
+      ],
+      "expo-web-browser",
+      "expo-secure-store",
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "Warret needs photo access so you can attach warranty cards, invoices and receipts to your products.",
+          "cameraPermission": "Warret uses the camera to snap photos of warranty cards and invoices."
+        }
+      ],
+      "expo-document-picker"
+    ]
+  }
+}
